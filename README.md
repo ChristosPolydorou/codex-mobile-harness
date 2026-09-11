@@ -2,6 +2,48 @@
 
 Codex Mobile Harness is a project-local operating policy for Android, iOS, and Kotlin Multiplatform work. It routes a request to a bounded investigation, planning, implementation, and independent verification path while leaving the mobile repository's own authority in charge.
 
+## Cursor companion
+
+The `cursor/` package adds the approved hybrid workflow for local Cursor Agent
+chats: Cursor Models (`Composer 2.5` and `Grok 4.6`) are the only Executors,
+while Other Models plan and investigate; the independent read-only Verifier is
+Grok 4.6. The full mobile policy is activated only for Android, iOS, and KMP
+tasks; existing Cursor Team/User/project rules remain authoritative.
+
+All role models and pool prefixes are centralized in
+`cursor/model-policy.json`. Edit only that file to adopt a new release or
+change cost/speed trade-offs, then reinstall and verify the package.
+
+Validate the complete source package with Python 3.11+:
+
+```bash
+/opt/homebrew/bin/python3 -m unittest discover -s tests -v
+```
+
+Install the user-scoped Cursor companion only after the source suite passes:
+
+```bash
+/opt/homebrew/bin/python3 cursor/install.py --cursor-home "$HOME/.cursor"
+/opt/homebrew/bin/python3 cursor/verify.py --cursor-home "$HOME/.cursor"
+```
+
+Select Composer 2.5 in Cursor's main Agent model picker once so the parent
+controller also uses the Cursor Models pool. The installer is additive and
+backup-first; it does not edit existing Cursor rules, settings, MCP servers, or
+project repositories. Cursor Tab, Inline Edit, cloud agents, and remote agents
+remain outside this local orchestration guarantee.
+
+If only Cursor Grok 4.6 and Composer 2.5 are enabled, L0-L1 and Cursor-side
+execution/verification work. Enable at least one policy-matching Other Model
+(currently Claude Opus 5 for planning; Terra for optional investigation) before
+using L2-L5, `plan-only`, or an investigation route. Auto can stay disabled.
+
+For setup, open Cursor Settings → Models, enable the two Cursor Models plus the
+Other Model(s) named by `cursor/model-policy.json`, select Composer 2.5 in the
+main Agent picker, restart Cursor, and open a fresh local Agent chat. Change
+future role models in that policy file only, then rerun `cursor/install.py` and
+`cursor/verify.py`.
+
 ## Prerequisites
 
 - A current Codex client that supports project custom agents and multi-agent tools.

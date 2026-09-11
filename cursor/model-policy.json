@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "roles": {
+    "investigator": {
+      "model": "gpt-5.6-terra[effort=high]",
+      "pool": "other"
+    },
+    "planner": {
+      "model": "claude-opus-5[effort=high]",
+      "pool": "other"
+    },
+    "executor": {
+      "model": "composer-2.5[fast=false]",
+      "pool": "cursor"
+    },
+    "hard_executor": {
+      "model": "grok-4.6[fast=false]",
+      "pool": "cursor"
+    },
+    "verifier": {
+      "model": "grok-4.6[fast=false]",
+      "pool": "cursor"
+    }
+  },
+  "pool_prefixes": {
+    "cursor": [
+      "composer-",
+      "grok-"
+    ],
+    "other": [
+      "claude-",
+      "fable-",
+      "gemini-",
+      "gpt-",
+      "muse-"
+    ]
+  }
+}

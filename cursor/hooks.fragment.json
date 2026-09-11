@@ -1,0 +1,23 @@
+{
+  "sessionStart": [
+    {
+      "command": "python3 ~/.cursor/hooks/codex-mobile-harness-session.py",
+      "timeout": 10
+    }
+  ],
+  "subagentStart": [
+    {
+      "command": "python3 ~/.cursor/hooks/codex-mobile-harness-model-guard.py",
+      "timeout": 10,
+      "failClosed": true
+    }
+  ],
+  "beforeShellExecution": [
+    {
+      "command": "python3 ~/.cursor/hooks/codex-mobile-harness-git-guard.py",
+      "timeout": 10,
+      "matcher": "git",
+      "failClosed": true
+    }
+  ]
+}

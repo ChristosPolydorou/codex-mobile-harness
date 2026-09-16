@@ -21,6 +21,13 @@ Use one or more exact categories: `PLAN_DISCREPANCY`, `SCOPE_EXPANSION`,
 `RISK_ESCALATION`, `VERIFICATION_CONTRADICTION`, `ENVIRONMENT_BLOCKER`, or
 `USER_DECISION_REQUIRED`.
 
+## Sandbox Boundary
+
+All inspection, testing, and checking must use sandbox-available tools within
+the active role's granted sandbox. Never request, use, or recommend unsandboxed
+or elevated bypasses. If the sandbox prevents required evidence, use the
+`ENVIRONMENT_BLOCKER` category and identify the check as `BLOCKED` or `NOT RUN`.
+
 ## Current Route and Approval State
 
 Record mode, L0-L5 level, triggered risk floors, routed roles, contract

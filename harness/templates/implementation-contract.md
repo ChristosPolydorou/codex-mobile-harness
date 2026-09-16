@@ -47,6 +47,9 @@ List preserved contracts and protections: existing architecture, validation,
 error handling, analytics, accessibility, localization, session behavior,
 privacy/PII handling, generated boundaries, dependencies, and dirty-work
 preservation. State every applicable platform gate and human-approval limit.
+Every role and every implementation check must remain within its granted
+sandbox and use only sandbox-available tools. Never request, use, or recommend
+unsandboxed or elevated bypasses.
 
 ## Files In Scope
 
@@ -92,8 +95,11 @@ check in the next section.
 List each exact command or directly observed manual check, its expected
 behavior, and the risk it covers. Include required platform/build variants,
 lint/static checks, focused regression tests, and runtime/device/simulator or
-visual checks when their evidence is required. Mark unavailable required checks
-as `BLOCKED` or unselected checks as `NOT RUN`; never imply they passed.
+visual checks when their evidence is required. Run them only with
+sandbox-available tools inside the granted sandbox. Mark unavailable required
+checks as `BLOCKED` or unselected checks as `NOT RUN`; emit an
+`ENVIRONMENT_BLOCKER` escalation for unavailable required evidence and never
+imply it passed.
 
 ## Acceptance Criteria
 

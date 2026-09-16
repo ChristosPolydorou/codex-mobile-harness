@@ -16,6 +16,12 @@ supplied. For L2-L5 or another contract-routed change, record the approved
 Implementation Contract/version and approval evidence. For L0/L1, record the
 immutable route/execution record and direct-route change budget instead.
 
+Verification must remain within the Verifier's granted sandbox and use only
+sandbox-available tools for inspections, tests, and checks. Never request, use,
+or recommend unsandboxed or elevated bypasses. If required evidence is
+unavailable, record `BLOCKED` or `NOT RUN`, state the limitation and residual
+risk, and emit an `ENVIRONMENT_BLOCKER` escalation.
+
 The minimum direct-route change budget records: original observable request and
 acceptance criteria; L0/L1 route/risk-floor/approval outcome; in-scope
 files/symbols; current and expected behavior; exact change; MUST, MAY, and OUT
@@ -86,7 +92,8 @@ Android, iOS, and KMP/shared implications separately when applicable.
 
 List every required `NOT RUN` or `BLOCKED` check, why it was not completed,
 what it would have proved, and the remaining risk. State `None` only when no
-such check exists.
+such check exists. Evidence unavailable inside the sandbox must remain visible
+here and must have an `ENVIRONMENT_BLOCKER` escalation.
 
 ## Residual Risks
 

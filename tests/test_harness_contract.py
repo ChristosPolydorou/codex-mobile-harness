@@ -27,6 +27,7 @@ REQUIRED_FILES = {
     "harness/rules/escalation.md",
     "harness/rules/scope-control.md",
     "harness/rules/git-policy.md",
+    "harness/rules/sandbox.md",
     "harness/rules/verification.md",
     "harness/mobile/android.md",
     "harness/mobile/ios.md",
@@ -142,6 +143,67 @@ class HarnessContractTests(unittest.TestCase):
         self.assertGreaterEqual(len(links), 8)
         missing = sorted(link for link in links if not (ROOT / link).is_file())
         self.assertEqual([], missing)
+
+    def test_sandbox_policy_is_explicit_and_linked(self) -> None:
+        policy = " ".join(
+            (ROOT / "harness/rules/sandbox.md").read_text(encoding="utf-8").split()
+        ).casefold()
+        for phrase in (
+            "every role",
+            "granted sandbox",
+            "sandbox-available tools",
+            "inspections",
+            "tests",
+            "checks",
+            "never request, use, or recommend unsandboxed or elevated bypasses",
+            "BLOCKED",
+            "NOT RUN",
+            "ENVIRONMENT_BLOCKER",
+            "not cryptographic enforcement",
+        ):
+            with self.subTest(phrase=phrase):
+                self.assertIn(phrase.casefold(), policy)
+
+        router = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn("[sandbox](harness/rules/sandbox.md)", router)
+        self.assertIn("sandbox policy", router.lower())
+
+    def test_all_roles_require_sandbox_bounded_execution(self) -> None:
+        required_phrases = (
+            "remain within the granted sandbox",
+            "sandbox-available tools",
+            "never request, use, or recommend unsandboxed or elevated bypasses",
+            "BLOCKED or NOT RUN",
+            "ENVIRONMENT_BLOCKER",
+        )
+        for role, relative_path in ROLE_FILES.items():
+            document = " ".join(
+                (ROOT / relative_path).read_text(encoding="utf-8").split()
+            ).casefold()
+            for phrase in required_phrases:
+                with self.subTest(role=role, phrase=phrase):
+                    self.assertIn(phrase.casefold(), document)
+
+    def test_sandbox_boundary_is_present_in_verification_and_templates(self) -> None:
+        documents = {
+            "verification": ROOT / "harness/rules/verification.md",
+            "implementation contract": ROOT / "harness/templates/implementation-contract.md",
+            "verification report": ROOT / "harness/templates/verification-report.md",
+            "escalation report": ROOT / "harness/templates/escalation-report.md",
+            "readme": ROOT / "README.md",
+        }
+        required_phrases = (
+            "sandbox",
+            "sandbox-available tools",
+            "ENVIRONMENT_BLOCKER",
+            "BLOCKED",
+            "NOT RUN",
+        )
+        for name, path in documents.items():
+            document = " ".join(path.read_text(encoding="utf-8").split())
+            for phrase in required_phrases:
+                with self.subTest(document=name, phrase=phrase):
+                    self.assertIn(phrase, document)
 
     def test_implementation_contract_has_every_required_heading(self) -> None:
         template = (ROOT / "harness/templates/implementation-contract.md").read_text(

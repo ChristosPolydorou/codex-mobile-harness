@@ -52,6 +52,16 @@ future role models in that policy file only, then rerun `cursor/install.py` and
 
 Account access and available models can differ between Codex installations. Confirm the routed model is available before dispatching work.
 
+## Sandbox boundary
+
+Every Investigator, Planner, Executor, and Verifier must remain within its
+granted sandbox and use only sandbox-available tools for inspections, tests,
+and checks. Never request, use, or recommend unsandboxed or elevated bypasses.
+If required evidence is unavailable inside the sandbox, record it as `BLOCKED`
+or `NOT RUN`, explain the residual risk, and emit an `ENVIRONMENT_BLOCKER`
+escalation. This policy is guidance, not cryptographic enforcement; the
+Codex client's sandbox permissions remain the technical control.
+
 ## Source-package validation
 
 Run this only from a clone of this harness repository. It validates the source
@@ -99,6 +109,7 @@ required = [
     ".codex/agents/verifier.toml",
     "harness/rules/routing.md",
     "harness/rules/scope-control.md",
+    "harness/rules/sandbox.md",
     "harness/rules/verification.md",
     "harness/templates/implementation-contract.md",
     "harness/templates/investigation-report.md",
@@ -117,6 +128,8 @@ agents = (root / "AGENTS.md").read_text(encoding="utf-8")
 links = re.findall(r"\[[^]]+\]\((harness/[^)]+\.md)\)", agents)
 missing_links = [link for link in links if not (root / link).is_file()]
 assert links and not missing_links, f"Broken installed harness links: {missing_links}"
+assert "sandbox-available tools" in agents
+assert "ENVIRONMENT_BLOCKER" in agents
 print("Installed Codex Mobile Harness policy, TOML, and links: PASS")
 PY
 ```

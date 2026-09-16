@@ -18,7 +18,12 @@ write `none` for each inactive role.
 Use the focused rules: [routing](harness/rules/routing.md),
 [complexity](harness/rules/complexity.md), [scope control](harness/rules/scope-control.md),
 [escalation](harness/rules/escalation.md), [Git policy](harness/rules/git-policy.md),
-and [verification](harness/rules/verification.md). Apply platform gates for
+[sandbox](harness/rules/sandbox.md), and [verification](harness/rules/verification.md).
+Every role must follow the sandbox policy: remain within its granted sandbox,
+use only sandbox-available tools for inspections, tests, and checks, never
+request, use, or recommend unsandboxed or elevated bypasses, and escalate an
+unavailable required check as `ENVIRONMENT_BLOCKER` with `BLOCKED` or `NOT RUN`
+evidence. Apply platform gates for
 [Android](harness/mobile/android.md) and [iOS/KMP](harness/mobile/ios.md). Use
 the [Implementation Contract](harness/templates/implementation-contract.md),
 [investigation report](harness/templates/investigation-report.md),

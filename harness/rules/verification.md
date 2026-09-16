@@ -1,5 +1,15 @@
 # Verification policy
 
+## Sandbox boundary
+
+The Investigator, Planner, Executor, and Verifier must remain within their
+granted sandbox. They use only sandbox-available tools for inspections, tests,
+and checks and must never request, use, or recommend unsandboxed or elevated
+bypasses. If a required check or evidence layer is unavailable inside the
+sandbox, record `BLOCKED` or `NOT RUN`, explain the limitation and residual
+risk, and emit an `ENVIRONMENT_BLOCKER` escalation. Sandbox restrictions are
+not a reason to infer, substitute, or overstate evidence.
+
 Verification is evidence for a precisely named claim, not a generic green
 signal. Select checks from the live repository's actual variants, tasks,
 schemes, destinations, and test infrastructure. Record each check as `PASS`,

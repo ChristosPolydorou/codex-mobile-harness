@@ -223,6 +223,57 @@ class CursorHarnessContractTests(unittest.TestCase):
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, skill)
 
+    def test_sandbox_only_policy_is_preserved_in_source_and_installed_instructions(
+        self,
+    ) -> None:
+        instruction_files = (
+            "skills/cursor-hybrid-harness/SKILL.md",
+            "agents/cursor-harness-investigator.md",
+            "agents/cursor-harness-planner.md",
+            "agents/cursor-harness-executor.md",
+            "agents/cursor-harness-hard-executor.md",
+            "agents/cursor-harness-verifier.md",
+        )
+        required_semantics = (
+            "remain within the granted sandbox",
+            "use only sandbox-available tools for inspections, tests, and checks",
+            "never request, use, or recommend unsandboxed or elevated bypasses",
+            "required evidence is unavailable",
+            "BLOCKED or NOT RUN",
+            "limitation and residual risk",
+            "ENVIRONMENT_BLOCKER escalation",
+        )
+
+        def normalized(document: str) -> str:
+            return " ".join(document.split()).casefold()
+
+        installer = load_module("install.py", "cursor_harness_sandbox_policy_install")
+        with tempfile.TemporaryDirectory() as temporary:
+            source_root = Path(temporary) / "source"
+            shutil.copytree(CURSOR_ROOT, source_root / "cursor")
+            cursor_home = Path(temporary) / ".cursor"
+            installer.install(cursor_home, source_root)
+
+            documents = {
+                **{
+                    f"source/{relative_path}": cursor_path(relative_path).read_text(
+                        encoding="utf-8"
+                    )
+                    for relative_path in instruction_files
+                },
+                **{
+                    f"installed/{relative_path}": (
+                        cursor_home / relative_path
+                    ).read_text(encoding="utf-8")
+                    for relative_path in instruction_files
+                },
+            }
+            for path, document in documents.items():
+                content = normalized(document)
+                for semantic in required_semantics:
+                    with self.subTest(path=path, semantic=semantic):
+                        self.assertIn(normalized(semantic), content)
+
     def test_hook_fragment_has_one_unique_command_for_each_required_event(self) -> None:
         relative_path = "hooks.fragment.json"
         if not cursor_path(relative_path).is_file():

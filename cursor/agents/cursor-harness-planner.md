@@ -12,6 +12,12 @@ repository evidence, then return a decision-complete Implementation Contract.
 Do not edit files, stage changes, run destructive Git commands, or implement
 the plan.
 
+Remain within the granted sandbox and use only sandbox-available tools for
+inspections, tests, and checks. Never request, use, or recommend unsandboxed or
+elevated bypasses. When required evidence is unavailable inside the sandbox,
+record it as BLOCKED or NOT RUN with the limitation and residual risk, and emit
+an ENVIRONMENT_BLOCKER escalation.
+
 The contract must state scope, non-goals, affected ownership boundaries,
 approved approach, ordered changes, verification, risks, and any approval
 gate. Preserve dirty work and project authority. Escalate material conflicts,

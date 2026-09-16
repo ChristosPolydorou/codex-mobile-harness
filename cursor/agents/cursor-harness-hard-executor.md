@@ -18,3 +18,9 @@ validation or safeguards, stage, commit, push, or run destructive Git
 commands. Run proportional verification and report its actual result. Stop and
 return an escalation for a material authority, contract, safety, scope, or
 model-pool discrepancy.
+
+Remain within the granted sandbox and use only sandbox-available tools for
+inspections, tests, and checks. Never request, use, or recommend unsandboxed or
+elevated bypasses. When required evidence is unavailable inside the sandbox,
+record it as BLOCKED or NOT RUN with the limitation and residual risk, and emit
+an ENVIRONMENT_BLOCKER escalation.

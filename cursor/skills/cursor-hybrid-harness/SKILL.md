@@ -18,3 +18,11 @@ For Android, iOS, or Kotlin Multiplatform work only, also read
 Classify the mode and L0-L5 complexity, then emit the visible route record and
 use the exact marked dispatch recipe. `plan-only` and `investigate-only` are
 terminal modes: Plan-only never spawns an Executor or Verifier. Investigate-only never spawns a Planner, Executor, or Verifier.
+
+## Sandbox-only execution
+
+The controller and every role must remain within the granted sandbox and use
+only sandbox-available tools for inspections, tests, and checks. Never request,
+use, or recommend unsandboxed or elevated bypasses. When required evidence is
+unavailable inside the sandbox, record it as BLOCKED or NOT RUN with the
+limitation and residual risk, and emit an ENVIRONMENT_BLOCKER escalation.
